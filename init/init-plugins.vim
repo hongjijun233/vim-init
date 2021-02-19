@@ -15,8 +15,10 @@
 "----------------------------------------------------------------------
 if !exists('g:bundle_group')
 	let g:bundle_group = ['basic', 'tags', 'enhanced', 'filetypes', 'textobj']
-	let g:bundle_group += ['tags', 'airline', 'nerdtree', 'ale', 'echodoc']
+	let g:bundle_group += ['commenter', 'tags', 'airline', 'nerdtree', 'ale', 'echodoc']
 	let g:bundle_group += ['leaderf']
+	let g:bundle_group += ['ycmd']
+	let g:bundle_group += ['go']
 endif
 
 
@@ -53,6 +55,8 @@ Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
 " Diff 增强，支持 histogram / patience 等更科学的 diff 算法
 Plug 'chrisbra/vim-diff-enhanced'
 
+" 中文Vim帮助
+Plug 'asins/vimcdoc'
 
 "----------------------------------------------------------------------
 " Dirvish 设置：自动排序并隐藏文件，同时定位到相关文件
@@ -96,6 +100,7 @@ if index(g:bundle_group, 'basic') >= 0
 
 	" 一次性安装一大堆 colorscheme
 	Plug 'flazz/vim-colorschemes'
+	Plug 'liuchengxu/space-vim-dark'
 
 	" 支持库，给其他插件用的函数库
 	Plug 'xolox/vim-misc'
@@ -173,6 +178,49 @@ if index(g:bundle_group, 'enhanced') >= 0
 	" ALT_+/- 用于按分隔符扩大缩小 v 选区
 	map <m-=> <Plug>(expand_region_expand)
 	map <m--> <Plug>(expand_region_shrink)
+
+	" 更高效的移动 [,, + w/fx]
+	Plug 'easymotion/vim-easymotion'
+	let g:EasyMotion_smartcase = 1
+	"let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
+	map fh <Plug>(easymotion-linebackward)
+	map fw <Plug>(easymotion-w)
+	map fj <Plug>(easymotion-e)
+	map fk <Plug>(easymotion-b)
+	map fl <Plug>(easymotion-lineforward)
+	" map fb <Plug>(easymotion-b)
+	" map fe <Plug>(easymotion-e)
+	" 重复上一次操作, 类似repeat插件, 很强大
+	map <Leader><leader>. <Plug>(easymotion-repeat)
+
+endif
+
+
+"----------------------------------------------------------------------
+" 快速注释
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'commenter') >= 0
+
+	Plug 'preservim/nerdcommenter'
+
+	" 创建默认的映射
+	let g:NERDCreateDefaultMappings = 1
+	" 在注释之前加一个空格
+	let g:NERDSpaceDelims = 1
+	" Use compact syntax for prettified multi-line comments
+	let g:NERDCompactSexyComs = 1
+	" Align line-wise comment delimiters flush left instead of following code indentation
+	let g:NERDDefaultAlign = 'left'
+	" Set a language to use its alternate delimiters by default
+	let g:NERDAltDelims_java = 1
+	" Add your own custom formats or override the defaults
+	let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+	" Allow commenting and inverting empty lines (useful when commenting a region)
+	let g:NERDCommentEmptyLines = 1
+	" Enable trimming of trailing whitespace when uncommenting
+	let g:NERDTrimTrailingWhitespace = 1
+	" Enable NERDCommenterToggle to check all selected lines is commented or not 
+	let g:NERDToggleCheckAllLines = 1
 endif
 
 
@@ -306,8 +354,10 @@ endif
 " NERDTree
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'nerdtree') >= 0
-	Plug 'scrooloose/nerdtree', {'on': ['NERDTree', 'NERDTreeFocus', 'NERDTreeToggle', 'NERDTreeCWD', 'NERDTreeFind'] }
+	Plug 'preservim/nerdtree', {'on': ['NERDTree', 'NERDTreeFocus', 'NERDTreeToggle', 'NERDTreeCWD', 'NERDTreeFind', 'NERDTreeMirror'] }
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+	Plug 'jistr/vim-nerdtree-tabs'
+	Plug 'Xuyuanp/nerdtree-git-plugin'
 	let g:NERDTreeMinimalUI = 1
 	let g:NERDTreeDirArrows = 1
 	let g:NERDTreeHijackNetrw = 0
@@ -315,6 +365,12 @@ if index(g:bundle_group, 'nerdtree') >= 0
 	noremap <space>no :NERDTreeFocus<cr>
 	noremap <space>nm :NERDTreeMirror<cr>
 	noremap <space>nt :NERDTreeToggle<cr>
+	" 屏蔽某些文件
+	let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
+	" 当NERDTree是最后一个窗口的时候，关闭它
+	autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif
+	" 新建TAB的时候，不要使用新的NERDTree
+	autocmd BufWinEnter * silent NERDTreeMirror
 endif
 
 
@@ -519,41 +575,35 @@ endif
 
 
 "----------------------------------------------------------------------
-" 结束插件安装
+" YCM
 "----------------------------------------------------------------------
-call plug#end()
+if index(g:bundle_group, 'ycmd') >= 0
+	Plug 'ycm-core/YouCompleteMe'
+	" 禁用预览功能：扰乱视听
+	let g:ycm_add_preview_to_completeopt = 0
+
+	" 禁用诊断功能：我们用前面更好用的 ALE 代替
+	let g:ycm_show_diagnostics_ui = 0
+	let g:ycm_server_log_level = 'info'
+	let g:ycm_min_num_identifier_candidate_chars = 2
+	let g:ycm_collect_identifiers_from_comments_and_strings = 1
+	let g:ycm_complete_in_strings=1
+	let g:ycm_key_invoke_completion = '<c-z>'
+	set completeopt=menu,menuone,noselect
+
+	" noremap <c-z> <NOP>
+
+	" 两个字符自动触发语义补全
+	let g:ycm_semantic_triggers =  {
+				\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+				\ 'cs,lua,javascript': ['re!\w{2}'],
+				\ }
 
 
-
-"----------------------------------------------------------------------
-" YouCompleteMe 默认设置：YCM 需要你另外手动编译安装
-"----------------------------------------------------------------------
-
-" 禁用预览功能：扰乱视听
-let g:ycm_add_preview_to_completeopt = 0
-
-" 禁用诊断功能：我们用前面更好用的 ALE 代替
-let g:ycm_show_diagnostics_ui = 0
-let g:ycm_server_log_level = 'info'
-let g:ycm_min_num_identifier_candidate_chars = 2
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-let g:ycm_complete_in_strings=1
-let g:ycm_key_invoke_completion = '<c-z>'
-set completeopt=menu,menuone,noselect
-
-" noremap <c-z> <NOP>
-
-" 两个字符自动触发语义补全
-let g:ycm_semantic_triggers =  {
-			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-			\ 'cs,lua,javascript': ['re!\w{2}'],
-			\ }
-
-
-"----------------------------------------------------------------------
-" Ycm 白名单（非名单内文件不启用 YCM），避免打开个 1MB 的 txt 分析半天
-"----------------------------------------------------------------------
-let g:ycm_filetype_whitelist = { 
+	"----------------------------------------------------------------------
+	" Ycm 白名单（非名单内文件不启用 YCM），避免打开个 1MB 的 txt 分析半天
+	"----------------------------------------------------------------------
+	let g:ycm_filetype_whitelist = { 
 			\ "c":1,
 			\ "cpp":1, 
 			\ "objc":1,
@@ -607,5 +657,38 @@ let g:ycm_filetype_whitelist = {
 			\ "zimbu":1,
 			\ "ps1":1,
 			\ }
+endif
+
+
+"----------------------------------------------------------------------
+" go相关的工具
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'go') >= 0
+	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+	" 取消绑定K
+	let g:go_doc_keywordprg_enabled = 0
+
+	" 高亮
+	let g:go_highlight_types = 1
+	" let g:go_highlight_fields = 1
+	let g:go_highlight_functions = 1
+	let g:go_highlight_function_calls = 1
+	" let g:go_highlight_function_parameters = 1
+	" let g:go_highlight_operators = 1
+	let g:custom_syntax_hightlight_operators= 1
+	let g:go_highlight_extra_types = 1
+	let g:go_highlight_methods = 1
+	let g:go_highlight_generate_tags = 1
+
+	" 保存时自动使用 gofmt 格式代码，使用 goimports 格式 import 部分，
+	" 同时自动导入缺少的import
+	let g:go_fmt_command = "goimports"
+endif
+
+
+"----------------------------------------------------------------------
+" 结束插件安装
+"----------------------------------------------------------------------
+call plug#end()
 
 
