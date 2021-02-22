@@ -23,6 +23,8 @@
 inoremap kj <Esc>
 " 在搜索完之后同样使用kj来关闭高亮
 nnoremap <silent> lkj :noh<return><esc>
+" 后退
+nnoremap jb <C-o>
 
 "----------------------------------------------------------------------
 " INSERT 模式下使用 EMACS 键位

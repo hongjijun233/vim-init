@@ -364,7 +364,7 @@ endif
 if index(g:bundle_group, 'nerdtree') >= 0
 	Plug 'preservim/nerdtree', {'on': ['NERDTree', 'NERDTreeFocus', 'NERDTreeToggle', 'NERDTreeCWD', 'NERDTreeFind', 'NERDTreeMirror'] }
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-	Plug 'jistr/vim-nerdtree-tabs'
+	" Plug 'jistr/vim-nerdtree-tabs'
 	Plug 'Xuyuanp/nerdtree-git-plugin'
 	let g:NERDTreeMinimalUI = 1
 	let g:NERDTreeDirArrows = 1
@@ -599,6 +599,25 @@ if index(g:bundle_group, 'ycmd') >= 0
 	let g:ycm_key_invoke_completion = '<c-z>'
 	set completeopt=menu,menuone,noselect
 
+	" 跳转到定义处,新Tab打开, 如果已存在当前文件的 tab, 则跳转到对应 tab
+	"取值范围：[ 'same-buffer', 'horizontal-split', 'vertical-split','new-tab', 'new-or-existing-tab' ]
+	let g:ycm_goto_buffer_command = 'new-or-existing-tab'
+	let g:ycm_error_symbol = '❥✘' "  错误标记 ✗✘☛☛❦❥❤︎ℳ❣❣➤➤➽
+	let g:ycm_warning_symbol = '❥➤' " 警告符号
+
+	" 定位当前函数、变量的定义处
+	nnoremap ff :YcmCompleter GoToDefinitionElseDeclaration<CR>
+	nnoremap fi :YcmCompleter GoToImplementation<CR>
+	nnoremap fr :YcmCompleter GoToReferences<CR>
+	nnoremap <leader>] :YcmCompleter GoToDefinitionElseDeclaration<CR>
+	nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
+	nnoremap <leader>[ :YcmCompleter GoToDeclaration<CR>
+	nnoremap <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+	nmap <leader>e :YcmDiags<CR>
+	let g:ycm_auto_hover=''
+	" nmap <leader>d <plug>(YCMHover)
+	nmap <Space> <plug>(YCMHover)
+	
 	" noremap <c-z> <NOP>
 
 	" 两个字符自动触发语义补全
