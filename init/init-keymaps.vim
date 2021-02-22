@@ -20,11 +20,11 @@
 " 一些自定义的快捷键
 "----------------------------------------------------------------------
 " kj 替换 Esc
-inoremap kj <Esc>
+inoremap fq <Esc>
 " 在搜索完之后同样使用kj来关闭高亮
-nnoremap <silent> lkj :noh<return><esc>
+nnoremap <silent> fh :noh<return><esc>
 " 后退
-nnoremap jb <C-o>
+nnoremap oo <C-o>
 
 "----------------------------------------------------------------------
 " INSERT 模式下使用 EMACS 键位

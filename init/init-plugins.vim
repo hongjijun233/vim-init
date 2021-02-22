@@ -606,7 +606,7 @@ if index(g:bundle_group, 'ycmd') >= 0
 	let g:ycm_warning_symbol = '❥➤' " 警告符号
 
 	" 定位当前函数、变量的定义处
-	nnoremap ff :YcmCompleter GoToDefinitionElseDeclaration<CR>
+	nnoremap fd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 	nnoremap fi :YcmCompleter GoToImplementation<CR>
 	nnoremap fr :YcmCompleter GoToReferences<CR>
 	nnoremap <leader>] :YcmCompleter GoToDefinitionElseDeclaration<CR>
