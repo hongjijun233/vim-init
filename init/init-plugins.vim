@@ -99,9 +99,17 @@ if index(g:bundle_group, 'basic') >= 0
 	Plug 'mhinz/vim-startify'
 
 	" 一次性安装一大堆 colorscheme
-	Plug 'flazz/vim-colorschemes'
+	" Plug 'flazz/vim-colorschemes'
 	Plug 'liuchengxu/space-vim-dark'
+	" Plug 'nine2/molokai'
 
+	" 自定义语法高亮
+	Plug 'nine2/vim-custom-syntax'
+	" 可使用此配置关闭语法高亮
+	" let g:custom_syntax_hightlight_enable= 0
+	" 语法高亮
+	" let g:custom_syntax_hightlight_macro= 1
+	
 	" 支持库，给其他插件用的函数库
 	Plug 'xolox/vim-misc'
 
@@ -675,7 +683,7 @@ if index(g:bundle_group, 'go') >= 0
 	let g:go_highlight_function_calls = 1
 	" let g:go_highlight_function_parameters = 1
 	" let g:go_highlight_operators = 1
-	let g:custom_syntax_hightlight_operators= 1
+	" let g:custom_syntax_hightlight_operators= 1
 	let g:go_highlight_extra_types = 1
 	let g:go_highlight_methods = 1
 	let g:go_highlight_generate_tags = 1
