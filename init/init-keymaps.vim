@@ -22,7 +22,7 @@
 " kj 替换 Esc
 inoremap fq <Esc>
 " 在搜索完之后同样使用kj来关闭高亮
-nnoremap <silent> fh :noh<return><esc>
+nnoremap <silent> <leader>h :noh<return><esc>
 " 后退
 nnoremap oo <C-o>
 

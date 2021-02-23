@@ -201,6 +201,22 @@ if index(g:bundle_group, 'enhanced') >= 0
 	" 重复上一次操作, 类似repeat插件, 很强大
 	map <Leader><leader>. <Plug>(easymotion-repeat)
 
+	" 快速补全, 需要 vim 支持 python
+	Plug 'SirVer/ultisnips'
+	" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+	let g:UltiSnipsExpandTrigger="<tab>"
+	let g:UltiSnipsJumpForwardTrigger="<tab>j"
+	let g:UltiSnipsJumpBackwardTrigger="<tab>k"
+	" 列出匹配的所有 snippets
+	let g:UltiSnipsListSnippets="<tab><tab>"
+	" let g:UltiSnipsSnippetDirectories=[$VIM_CONFIG_PATH.'/projects/snips/']
+	let g:UltiSnipsSnippetDirectories=['UltiSnips', expand("$VIM_CONFIG_PATH/projects/snips")]
+	
+	" If you want :UltiSnipsEdit to split your window.
+	let g:UltiSnipsEditSplit="vertical"
+	
+	" github 上的 snippets 集合
+	Plug 'lianghongji/vim-snippets'
 endif
 
 
@@ -411,6 +427,10 @@ if index(g:bundle_group, 'ale') >= 0
 	let g:ale_lint_delay = 500
 	let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 
+	" 设定样式
+	let g:ale_sign_error = '❥✘' "  错误标记 ✗✘☛☛❦❥❤︎ℳ❣❣➤➤➽
+	let g:ale_sign_warning = '❥➤' " 警告符号
+
 	" 设定检测的时机：normal 模式文字改变，或者离开 insert模式
 	" 禁用默认 INSERT 模式下改变文字也触发的设置，太频繁外，还会让补全窗闪烁
 	let g:ale_lint_on_text_changed = 'normal'
@@ -602,8 +622,9 @@ if index(g:bundle_group, 'ycmd') >= 0
 	" 跳转到定义处,新Tab打开, 如果已存在当前文件的 tab, 则跳转到对应 tab
 	"取值范围：[ 'same-buffer', 'horizontal-split', 'vertical-split','new-tab', 'new-or-existing-tab' ]
 	let g:ycm_goto_buffer_command = 'new-or-existing-tab'
-	let g:ycm_error_symbol = '❥✘' "  错误标记 ✗✘☛☛❦❥❤︎ℳ❣❣➤➤➽
-	let g:ycm_warning_symbol = '❥➤' " 警告符号
+	
+	" let g:ycm_error_symbol = '❥✘' "  错误标记 ✗✘☛☛❦❥❤︎ℳ❣❣➤➤➽
+	" let g:ycm_warning_symbol = '❥➤' " 警告符号
 
 	" 定位当前函数、变量的定义处
 	nnoremap ff :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -617,7 +638,10 @@ if index(g:bundle_group, 'ycmd') >= 0
 	let g:ycm_auto_hover=''
 	" nmap <leader>d <plug>(YCMHover)
 	nmap <Space> <plug>(YCMHover)
-	
+
+	" C-n 同时可用, Tab 给 ultisnips 使用"
+	let g:ycm_key_list_select_completion = ['<Down>']
+
 	" noremap <c-z> <NOP>
 
 	" 两个字符自动触发语义补全
