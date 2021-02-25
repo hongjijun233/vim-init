@@ -20,7 +20,7 @@
 " 一些自定义的快捷键
 "----------------------------------------------------------------------
 " kj 替换 Esc
-inoremap fq <Esc>
+inoremap <C-q> <Esc>
 " 在搜索完之后同样使用kj来关闭高亮
 nnoremap <silent> <leader>h :noh<return><esc>
 " 后退

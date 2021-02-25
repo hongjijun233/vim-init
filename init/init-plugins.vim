@@ -395,6 +395,7 @@ if index(g:bundle_group, 'nerdtree') >= 0
 	autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif
 	" 新建TAB的时候，不要使用新的NERDTree
 	autocmd BufWinEnter * silent NERDTreeMirror
+	" autocmd Bufenter * if &filetype != "qf" || &filetype != "loclist" || &filetype != "ctrlsf" | silent NERDTreeMirror | endif
 endif
 
 
