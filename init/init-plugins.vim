@@ -193,10 +193,10 @@ if index(g:bundle_group, 'enhanced') >= 0
 	"let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
 	map fh <Plug>(easymotion-linebackward)
 	map fw <Plug>(easymotion-w)
-	map fj <Plug>(easymotion-e)
-	map fk <Plug>(easymotion-b)
+	map fj <Plug>(easymotion-j)
+	map fk <Plug>(easymotion-k)
 	map fl <Plug>(easymotion-lineforward)
-	" map fb <Plug>(easymotion-b)
+	map fb <Plug>(easymotion-b)
 	" map fe <Plug>(easymotion-e)
 	" 重复上一次操作, 类似repeat插件, 很强大
 	map <Leader><leader>. <Plug>(easymotion-repeat)
@@ -394,7 +394,8 @@ if index(g:bundle_group, 'nerdtree') >= 0
 	" 当NERDTree是最后一个窗口的时候，关闭它
 	autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif
 	" 新建TAB的时候，不要使用新的NERDTree
-	autocmd BufWinEnter * silent NERDTreeMirror
+	autocmd BufEnter * if !argc() | NERDTreeMirror | endif
+	" autocmd BufWinEnter * silent NERDTreeMirror
 	" autocmd Bufenter * if &filetype != "qf" || &filetype != "loclist" || &filetype != "ctrlsf" | silent NERDTreeMirror | endif
 endif
 
@@ -731,6 +732,8 @@ if index(g:bundle_group, 'go') >= 0
 	let g:go_highlight_extra_types = 1
 	let g:go_highlight_methods = 1
 	let g:go_highlight_generate_tags = 1
+
+	let g:go_updatetime = 300
 
 	" 保存时自动使用 gofmt 格式代码，使用 goimports 格式 import 部分，
 	" 同时自动导入缺少的import
