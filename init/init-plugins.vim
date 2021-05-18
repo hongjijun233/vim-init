@@ -389,14 +389,19 @@ if index(g:bundle_group, 'nerdtree') >= 0
 	noremap <space>no :NERDTreeFocus<cr>
 	noremap <space>nm :NERDTreeMirror<cr>
 	noremap <space>nt :NERDTreeToggle<cr>
+	noremap gl :tabn<cr>
+	noremap gh :tabp<cr>
+	
 	" 屏蔽某些文件
 	let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
 	" 当NERDTree是最后一个窗口的时候，关闭它
 	autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif
 	" 新建TAB的时候，不要使用新的NERDTree
-	autocmd BufEnter * if !argc() | NERDTreeMirror | endif
+	" autocmd BufEnter * if !argc() | NERDTreeMirror | endif
 	" autocmd BufWinEnter * silent NERDTreeMirror
 	" autocmd Bufenter * if &filetype != "qf" || &filetype != "loclist" || &filetype != "ctrlsf" | silent NERDTreeMirror | endif
+	" autocmd bufenter go,makefile,sh,py,python silent NERDTreeMirror
+	" nnoremap <C-t> :tabnew<CR>:silent NERDTreeMirror<CR>:wincmd p<CR>
 endif
 
 
@@ -526,6 +531,9 @@ if index(g:bundle_group, 'leaderf') >= 0
 
 		" ALT+m 全局 tags 模糊匹配
 		noremap <m-m> :LeaderfTag<cr>
+
+		" 全文搜索
+		noremap <tab>f :Leaderf rg<cr>
 
 		" 最大历史文件保存 2048 个
 		let g:Lf_MruMaxFiles = 2048

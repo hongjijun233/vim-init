@@ -134,7 +134,7 @@ augroup END
 if has('gui_running')
 	let g:config_vim_tab_style = 3
 endif
-
+let g:config_vim_tab_style = 3
 
 "----------------------------------------------------------------------
 " 终端下的 tabline
