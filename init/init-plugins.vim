@@ -19,6 +19,7 @@ if !exists('g:bundle_group')
 	let g:bundle_group += ['leaderf']
 	let g:bundle_group += ['ycmd']
 	let g:bundle_group += ['go']
+	" let g:bundle_group += ['tabnine']
 endif
 
 
@@ -749,6 +750,12 @@ if index(g:bundle_group, 'go') >= 0
 endif
 
 
+"----------------------------------------------------------------------
+" 尝试一下新工具
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'tabnine') >= 0
+	Plug 'codota/tabnine-vim'
+endif
 "----------------------------------------------------------------------
 " 结束插件安装
 "----------------------------------------------------------------------
