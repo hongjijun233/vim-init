@@ -14,7 +14,7 @@
 " 默认情况下的分组，可以再前面覆盖之
 "----------------------------------------------------------------------
 if !exists('g:bundle_group')
-	let g:bundle_group = ['basic', 'tags', 'enhanced', 'filetypes', 'textobj']
+	let g:bundle_group = ['basic', 'tags', 'enhanced', 'filetypes', 'textobj', 'oscyank']
 	let g:bundle_group += ['commenter', 'tags', 'airline', 'nerdtree', 'ale', 'echodoc']
 	let g:bundle_group += ['leaderf']
 	let g:bundle_group += ['ycmd']
@@ -326,6 +326,22 @@ endif
 
 
 "----------------------------------------------------------------------
+" 远程剪贴板 
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'oscyank') >= 0
+
+	" 远程剪贴板
+	Plug 'ojroques/vim-oscyank', {'branch': 'main'}
+
+	vmap <C-c> <Plug>OSCYankVisual
+
+	" 剪贴板
+	set clipboard=unnamedplus
+
+endif
+
+
+"----------------------------------------------------------------------
 " 文件类型扩展
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'filetypes') >= 0
@@ -577,6 +593,22 @@ if index(g:bundle_group, 'leaderf') >= 0
 				\ "Function": [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<cr>']],
 				\ }
 
+		" popup
+		let g:Lf_WindowPosition = 'popup'
+		let g:Lf_PreviewInPopup = 1
+		let g:Lf_PreviewResult = {
+					\ 'File': 1,
+					\ 'Buffer': 0,
+					\ 'Mru': 0,
+					\ 'Tag': 0,
+					\ 'BufTag': 1,
+					\ 'Function': 1,
+					\ 'Line': 0,
+					\ 'Colorscheme': 0,
+					\ 'Rg': 1,
+					\ 'Gtags': 0
+					\}
+
 	else
 		" 不支持 python ，使用 CtrlP 代替
 		Plug 'ctrlpvim/ctrlp.vim'
@@ -619,7 +651,7 @@ endif
 if index(g:bundle_group, 'ycmd') >= 0
 	Plug 'ycm-core/YouCompleteMe'
 	" 禁用预览功能：扰乱视听
-	let g:ycm_add_preview_to_completeopt = 0
+	" let g:ycm_add_preview_to_completeopt = 0
 
 	" 禁用诊断功能：我们用前面更好用的 ALE 代替
 	let g:ycm_show_diagnostics_ui = 0
