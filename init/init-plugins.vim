@@ -251,8 +251,8 @@ if index(g:bundle_group, 'commenter') >= 0
 	" Enable NERDCommenterToggle to check all selected lines is commented or not 
 	let g:NERDToggleCheckAllLines = 1
 
-	" 定位到当前文件
-	map <leader>r :NERDTreeFind<cr>
+	map <C-/> <Plug>NERDCommenterToggle('n', 'Toggle')<cr>
+
 endif
 
 
@@ -426,6 +426,9 @@ if index(g:bundle_group, 'nerdtree') >= 0
 	" autocmd Bufenter * if &filetype != "qf" || &filetype != "loclist" || &filetype != "ctrlsf" | silent NERDTreeMirror | endif
 	" autocmd bufenter go,makefile,sh,py,python silent NERDTreeMirror
 	" nnoremap <C-t> :tabnew<CR>:silent NERDTreeMirror<CR>:wincmd p<CR>
+	
+	" 定位到当前文件
+	map <leader>r :NERDTreeFind<cr>
 endif
 
 
