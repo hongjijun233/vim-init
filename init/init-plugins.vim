@@ -59,6 +59,9 @@ Plug 'chrisbra/vim-diff-enhanced'
 " 中文Vim帮助
 Plug 'asins/vimcdoc'
 
+" 缩进线
+Plug 'Yggdroot/indentLine' 
+
 "----------------------------------------------------------------------
 " Dirvish 设置：自动排序并隐藏文件，同时定位到相关文件
 " 这个排序函数可以将目录排在前面，文件排在后面，并且按照字母顺序排序
@@ -103,6 +106,7 @@ if index(g:bundle_group, 'basic') >= 0
 	" Plug 'flazz/vim-colorschemes'
 	Plug 'liuchengxu/space-vim-dark'
 	" Plug 'nine2/molokai'
+	Plug 'jacoborus/tender.vim'
 
 	" 自定义语法高亮
 	Plug 'nine2/vim-custom-syntax'
@@ -246,6 +250,9 @@ if index(g:bundle_group, 'commenter') >= 0
 	let g:NERDTrimTrailingWhitespace = 1
 	" Enable NERDCommenterToggle to check all selected lines is commented or not 
 	let g:NERDToggleCheckAllLines = 1
+
+	" 定位到当前文件
+	map <leader>r :NERDTreeFind<cr>
 endif
 
 
@@ -382,7 +389,7 @@ if index(g:bundle_group, 'airline') >= 0
 	let g:airline_powerline_fonts = 0
 	let g:airline_exclude_preview = 1
 	let g:airline_section_b = '%n'
-	let g:airline_theme='deus'
+	let g:airline_theme='tender'
 	let g:airline#extensions#branch#enabled = 0
 	let g:airline#extensions#syntastic#enabled = 0
 	let g:airline#extensions#fugitiveline#enabled = 0

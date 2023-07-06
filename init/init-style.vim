@@ -40,6 +40,21 @@ set showcmd
 " 水平切割窗口时，默认在右边显示新窗口
 set splitright
 
+" 光标
+if &term =~ "xterm" || &term =~ "screen-256color"
+    " INSERT mode
+    let &t_SI = "\<Esc>[6 q" . "\<Esc>]12;orange\x7"
+    " REPLACE mode
+    let &t_SR = "\<Esc>[3 q" . "\<Esc>]12;orange\x7"
+    " NORMAL mode
+    let &t_EI = "\<Esc>[2 q" . "\<Esc>]12;orange\x7"
+endif
+" 1 -> blinking block  闪烁的方块
+" 2 -> solid block  不闪烁的方块
+" 3 -> blinking underscore  闪烁的下划线
+" 4 -> solid underscore  不闪烁的下划线
+" 5 -> blinking vertical bar  闪烁的竖线
+" 6 -> solid vertical bar  不闪烁的竖线
 
 "----------------------------------------------------------------------
 " 颜色主题：色彩文件位于 colors 目录中
@@ -53,7 +68,8 @@ set t_Co=256
 
 " 设置颜色主题，会在所有 runtimepaths 的 colors 目录寻找同名配置
 let g:space_vim_dark_background = 233
-color space-vim-dark
+"color space-vim-dark
+colorscheme tender
 
 
 "----------------------------------------------------------------------
